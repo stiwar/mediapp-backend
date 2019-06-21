@@ -1,4 +1,4 @@
-package com.mitocodecontroller;
+package com.mitocode.controller;
 
 public class PacienteController {
 
