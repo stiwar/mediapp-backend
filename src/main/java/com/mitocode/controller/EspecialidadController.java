@@ -12,38 +12,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mitocode.model.Paciente;
-import com.mitocode.service.IPacienteService;
+import com.mitocode.model.Especialidad;
+import com.mitocode.service.IEspecialidadService;
 
 @RestController
-@RequestMapping("/pacientes")
-public class PacienteController {
+@RequestMapping("/especialidades")
+public class EspecialidadController {
 
 	@Autowired
-	private IPacienteService service;
+	private IEspecialidadService service;
 
 	@GetMapping
-	public List<Paciente> listar() {
+	public List<Especialidad> listar() {
 		return service.listar();
 	}
 
 	@GetMapping("/{id}")
-	public Paciente listarPorId(@PathVariable("id") Integer idPaciente) {
-		return service.leer(idPaciente);
+	public Especialidad listarPorId(@PathVariable("id") Integer idEspecialidad) {
+		return service.leer(idEspecialidad);
 	}
 
 	@PostMapping
-	public Paciente registrar(@RequestBody Paciente paciente) {
-		return service.registrar(paciente);
+	public Especialidad registrar(@RequestBody Especialidad Especialidad) {
+		return service.registrar(Especialidad);
 	}
 
 	@PutMapping
-	public Paciente modificar(Paciente paciente) {
-		return service.modificar(paciente);
+	public Especialidad modificar(Especialidad Especialidad) {
+		return service.modificar(Especialidad);
 	}
 
 	@DeleteMapping("/{id}")
-	public void eliminar(@PathVariable("id") Integer idPaciente) {
-		service.eliminar(idPaciente);
+	public void eliminar(@PathVariable("id") Integer idEspecialidad) {
+		service.eliminar(idEspecialidad);
 	}
 }

@@ -21,13 +21,13 @@ public class Paciente {
 	@Column(name = "apellidos", nullable = false, length = 70)
 	private String apellidos;
 
-	@Column(name = "dni", nullable = false, length = 8)
+	@Column(name = "dni", nullable = false, length = 15)
 	private String dni;
 
 	@Column(name = "direccion", nullable = true, length = 150)
 	private String direccion;
 
-	@Column(name = "telefono", nullable = true, length = 9)
+	@Column(name = "telefono", nullable = true, length = 15)
 	private String telefono;
 
 	@Column(name = "email", nullable = true, length = 55)

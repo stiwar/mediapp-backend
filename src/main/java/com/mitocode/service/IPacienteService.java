@@ -1,5 +1,7 @@
 package com.mitocode.service;
 
-public class IPacienteService {
+import com.mitocode.model.Paciente;
 
+public interface IPacienteService extends ICRUD<Paciente>{
+	
 }
