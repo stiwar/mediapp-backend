@@ -13,6 +13,9 @@ target/
 .springBeans
 .sts4-cache
 
+### Build Artifacts
+bin/
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
