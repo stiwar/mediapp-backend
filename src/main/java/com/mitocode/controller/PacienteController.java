@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mitocode.exception.ModeloNotFoundException;
 import com.mitocode.model.Paciente;
 import com.mitocode.service.IPacienteService;
 
@@ -29,7 +30,13 @@ public class PacienteController {
 
 	@GetMapping("/{id}")
 	public Paciente listarPorId(@PathVariable("id") Integer idPaciente) {
-		return service.leer(idPaciente);
+
+		Paciente paciente = service.leer(idPaciente);
+		if (paciente == null) {
+			throw new ModeloNotFoundException("ID NO ENCONTRADO: " + idPaciente);
+		}
+
+		return paciente;
 	}
 
 	@PostMapping
@@ -38,12 +45,19 @@ public class PacienteController {
 	}
 
 	@PutMapping
-	public Paciente modificar(Paciente paciente) {
+	public Paciente modificar(@RequestBody Paciente paciente) {
 		return service.modificar(paciente);
 	}
 
 	@DeleteMapping("/{id}")
 	public void eliminar(@PathVariable("id") Integer idPaciente) {
-		service.eliminar(idPaciente);
+
+		Paciente paciente = service.leer(idPaciente);
+		if (paciente == null)
+			throw new ModeloNotFoundException("ID NO ENCONTRADO: " + idPaciente);
+		else
+			service.eliminar(idPaciente);
+
 	}
+
 }
