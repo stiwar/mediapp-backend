@@ -6,6 +6,10 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,14 +39,28 @@ public class PacienteController {
 		return new ResponseEntity<List<Paciente>>(pacientes, HttpStatus.OK);
 	}
 
+//	@GetMapping("/{id}")
+//	public ResponseEntity<Paciente> listarPorId(@PathVariable("id") Integer idPaciente) {
+//
+//		Paciente paciente = service.leer(idPaciente);
+//		if (paciente == null)
+//			throw new ModeloNotFoundException("ID NO ENCONTRADO: " + idPaciente);
+//
+//		return new ResponseEntity<Paciente>(paciente, HttpStatus.OK);
+//	}
+	
 	@GetMapping("/{id}")
-	public ResponseEntity<Paciente> listarPorId(@PathVariable("id") Integer idPaciente) {
+	public Resource<Paciente> listarPorId(@PathVariable("id") Integer idPaciente) {
 
 		Paciente paciente = service.leer(idPaciente);
 		if (paciente == null)
 			throw new ModeloNotFoundException("ID NO ENCONTRADO: " + idPaciente);
-
-		return new ResponseEntity<Paciente>(paciente, HttpStatus.OK);
+		
+		Resource<Paciente> resource = new Resource<Paciente>(paciente);
+		//localhost:8080/pacientes/{id}
+		ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).listarPorId(idPaciente));//this.getClass() xq tiene la ruta /pacientes y listarPorId(idPaciente) es xq tiene la ruta /{id}, con esto construyo la url: /pacientes/{id} 
+		resource.add(linkTo.withRel("paciente-resource"));
+		return resource;
 	}
 
 //	@PostMapping
