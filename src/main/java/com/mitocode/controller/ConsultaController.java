@@ -65,13 +65,13 @@ public class ConsultaController {
 
 //	@PostMapping
 //	public ResponseEntity<Consulta> registrar(@Valid @RequestBody Consulta consulta) {
-//		Consulta con = service.modificar(consulta);
+//		Consulta con = service.registrar(consulta);
 //		return new ResponseEntity<Consulta>(con, HttpStatus.CREATED);
 //	}
 	
-	@PostMapping
+	@PostMapping(produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> registrar(@Valid @RequestBody Consulta consulta) {
-		Consulta pac = service.modificar(consulta);
+		Consulta pac = service.registrar(consulta);
 		//localhost:8080/consultas/{id}
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(pac.getIdConsulta()).toUri();
 		return ResponseEntity.created(location).build();

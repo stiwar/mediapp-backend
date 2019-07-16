@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mitocode.model.Consulta;
+import com.mitocode.model.DetalleConsulta;
 import com.mitocode.repo.IConsultaRepo;
 import com.mitocode.service.IConsultaService;
 
@@ -16,8 +17,12 @@ public class ConsultaServiceImpl implements IConsultaService {
 	private IConsultaRepo repo;
 
 	@Override
-	public Consulta registrar(Consulta e) {
-		return repo.save(e);
+	public Consulta registrar(Consulta cons) {
+		//cons.getDetalleConsulta().forEach(det -> det.setConsulta(cons));
+		for(DetalleConsulta det : cons.getDetalleConsulta()) {
+			det.setConsulta(cons);
+		}
+		return repo.save(cons);
 	}
 
 	@Override
