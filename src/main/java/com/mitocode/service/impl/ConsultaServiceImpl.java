@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mitocode.dto.ConsultaListaExamenDTO;
 import com.mitocode.model.Consulta;
 import com.mitocode.model.DetalleConsulta;
+import com.mitocode.repo.IConsultaExamenRepo;
 import com.mitocode.repo.IConsultaRepo;
 import com.mitocode.service.IConsultaService;
 
@@ -15,6 +17,18 @@ public class ConsultaServiceImpl implements IConsultaService {
 
 	@Autowired
 	private IConsultaRepo repo;
+	
+	@Autowired
+	private IConsultaExamenRepo repoCE;
+	
+	@Override
+	public Consulta registrarTransaccional(ConsultaListaExamenDTO consultaDTO) {
+		consultaDTO.getConsulta().getDetalleConsulta().forEach(det -> det.setConsulta(consultaDTO.getConsulta()));
+		repo.save(consultaDTO.getConsulta());
+		consultaDTO.getListExamen().forEach(e -> repoCE.registrar(consultaDTO.getConsulta().getIdConsulta(), e.getIdExamen() ));
+		
+		return consultaDTO.getConsulta();
+	}
 
 	@Override
 	public Consulta registrar(Consulta cons) {
