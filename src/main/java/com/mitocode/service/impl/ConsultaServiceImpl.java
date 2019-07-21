@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mitocode.dto.ConsultaListaExamenDTO;
 import com.mitocode.model.Consulta;
@@ -21,15 +22,20 @@ public class ConsultaServiceImpl implements IConsultaService {
 	@Autowired
 	private IConsultaExamenRepo repoCE;
 	
+	@Transactional
 	@Override
 	public Consulta registrarTransaccional(ConsultaListaExamenDTO consultaDTO) {
+		
+		//primero insercción a la tabla Consulta y DetalleConsulta
 		consultaDTO.getConsulta().getDetalleConsulta().forEach(det -> det.setConsulta(consultaDTO.getConsulta()));
 		repo.save(consultaDTO.getConsulta());
+		
+		//inserción manual a la tabla ConsultaExamen
 		consultaDTO.getListExamen().forEach(e -> repoCE.registrar(consultaDTO.getConsulta().getIdConsulta(), e.getIdExamen() ));
 		
 		return consultaDTO.getConsulta();
 	}
-
+ 
 	@Override
 	public Consulta registrar(Consulta cons) {
 		//cons.getDetalleConsulta().forEach(det -> det.setConsulta(cons));
