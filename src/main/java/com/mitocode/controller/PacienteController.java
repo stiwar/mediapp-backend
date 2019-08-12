@@ -49,6 +49,7 @@ public class PacienteController {
 //		return new ResponseEntity<Paciente>(paciente, HttpStatus.OK);
 //	}
 	
+	//ejemplo con HATEOAS para devolver la información sobre el recurso asociado
 	@GetMapping("/{id}")
 	public Resource<Paciente> listarPorId(@PathVariable("id") Integer idPaciente) {
 
@@ -65,13 +66,13 @@ public class PacienteController {
 
 //	@PostMapping
 //	public ResponseEntity<Paciente> registrar(@Valid @RequestBody Paciente paciente) {
-//		Paciente pac = service.modificar(paciente);
+//		Paciente pac = service.registrar(paciente);
 //		return new ResponseEntity<Paciente>(pac, HttpStatus.CREATED);
 //	}
 	
 	@PostMapping
 	public ResponseEntity<Object> registrar(@Valid @RequestBody Paciente paciente) {
-		Paciente pac = service.modificar(paciente);
+		Paciente pac = service.registrar(paciente);
 		//localhost:8080/pacientes/{id}
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(pac.getIdPaciente()).toUri();
 		return ResponseEntity.created(location).build();

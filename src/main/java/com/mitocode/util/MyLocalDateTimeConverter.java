@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-
+//clase utilitaria para pasar de LocalDateTime a Timestamp (y visceversa) que no es necesaria en springboot versión 2
 @Converter(autoApply = true)
 public class MyLocalDateTimeConverter implements AttributeConverter<java.time.LocalDateTime, java.sql.Timestamp> {
 

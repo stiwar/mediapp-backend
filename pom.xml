@@ -35,7 +35,7 @@
 		
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-jsr310</artifactId><!-- para uso de anotaciones como @JsonSerialize -->
+			<artifactId>jackson-datatype-jsr310</artifactId><!-- para uso de anotaciones como @JsonSerialize solo es necesario en versiones anteriores a 2 de SpringBoot -->
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>

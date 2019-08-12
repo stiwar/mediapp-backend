@@ -23,7 +23,7 @@ public class Paciente {
 	private Integer idPaciente;
 
 	@ApiModelProperty(notes = "Nombres debe tener mínimo 3 caracteres") //para la documentación de swagger
-	@Size(min = 3, message = "Nombres debe tener mínimo 3 caracteres")
+	@Size(min = 3, message = "Nombres debe tener mínimo 3 caracteres") //validation.constraints, el atributo 'message' se lanza si una excepción sucede
 	@Column(name = "nombres", nullable = false, length = 70)
 	private String nombres;
 

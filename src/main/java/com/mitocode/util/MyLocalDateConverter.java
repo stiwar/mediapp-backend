@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-
+//clase utilitaria para pasar de LocalDate a Date (y visceversa) que no es necesaria en springboot versión 2
 @Converter(autoApply = true)
 public class MyLocalDateConverter implements AttributeConverter<java.time.LocalDate, java.sql.Date> {
 
