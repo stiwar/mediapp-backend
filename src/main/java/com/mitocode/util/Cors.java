@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+
 //esta clase centraliza el uso de CORS para todos los controladores en lugar de hacerlo para cada controlador
 @Component//para que Spring sepa que es un componente y Spring lo tome como un bean manejado por él
 @Order(Ordered.HIGHEST_PRECEDENCE)//agrega importancia alta, utilizada para eliminar conflictos por ejemplo con Spring Security

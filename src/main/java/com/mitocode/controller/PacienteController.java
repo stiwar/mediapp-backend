@@ -1,15 +1,18 @@
 package com.mitocode.controller;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import java.net.URI;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,6 +40,12 @@ public class PacienteController {
 	public ResponseEntity<List<Paciente>> listar() {
 		List<Paciente> pacientes = service.listar();
 		return new ResponseEntity<List<Paciente>>(pacientes, HttpStatus.OK);
+	}
+	
+	@GetMapping("/pageable")
+	public ResponseEntity<Page<Paciente>> listarPageable(Pageable pageable) {
+		Page<Paciente> pacientes = service.listarPageable(pageable);
+		return new ResponseEntity<Page<Paciente>>(pacientes, HttpStatus.OK);
 	}
 
 //	@GetMapping("/{id}")
