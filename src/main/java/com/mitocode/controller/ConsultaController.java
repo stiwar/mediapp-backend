@@ -58,6 +58,7 @@ public class ConsultaController {
 			d.setMedico(c.getMedico());
 			d.setPaciente(c.getPaciente());
 			
+			//construccion de enlaces
 			//localhost:8080/consultas/1
 			ControllerLinkBuilder linkTo = linkTo(methodOn(ConsultaController.class).listarPorId(c.getIdConsulta()));
 			d.add(linkTo.withSelfRel());

@@ -22,7 +22,7 @@ public class ConsultaServiceImpl implements IConsultaService {
 	@Autowired
 	private IConsultaExamenRepo repoCE;
 	
-	@Transactional
+	@Transactional//anotación necesaria por la capa Repo en IConsultaExamenRepo, esta anotación también se puede colocar a nivel de clase si queremos que toda la clase sea transaccional
 	@Override
 	public Consulta registrarTransaccional(ConsultaListaExamenDTO consultaDTO) {
 		
