@@ -43,7 +43,7 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler{
 	
 	//cualquier otra excepción que no sea controlada de manera explícita, entra aquí y produce un error 500
 	@ExceptionHandler(Exception.class)
-	public final ResponseEntity<ExceptionResponse> manejarModeloExcepciones(Exception ex, WebRequest request){
+	public final ResponseEntity<ExceptionResponse> manejarTodasExcepciones(Exception ex, WebRequest request){
 		
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
 		return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);

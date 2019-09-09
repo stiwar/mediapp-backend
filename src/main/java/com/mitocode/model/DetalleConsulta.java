@@ -19,7 +19,7 @@ public class DetalleConsulta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idDetalle;
 
-	@JsonIgnore//para evitar un bucle infinito al momento de enviar un json para crear un recurso por post en localhost:8080/consultas
+	@JsonIgnore//para evitar un bucle infinito al momento de enviar un json para crear un recurso (una Consulta) por post en localhost:8080/consultas
 	@ManyToOne
 	@JoinColumn(name = "id_consulta", nullable = false)
 	private Consulta consulta;
