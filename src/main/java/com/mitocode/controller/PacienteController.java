@@ -102,7 +102,7 @@ public class PacienteController {
 		else
 			service.eliminar(idPaciente);
 		
-		return new ResponseEntity<Object>(HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 
 	}
 

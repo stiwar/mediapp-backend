@@ -110,9 +110,9 @@ public class ConsultaController {
 	
 	@PostMapping(produces = "application/json", consumes = "application/json")
 	public ResponseEntity<Object> registrar(@Valid @RequestBody ConsultaListaExamenDTO consultaDTO) {
-		Consulta pac = service.registrarTransaccional(consultaDTO);
+		Consulta consulta = service.registrarTransaccional(consultaDTO);
 		//localhost:8080/consultas/{id}
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(pac.getIdConsulta()).toUri();
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(consulta.getIdConsulta()).toUri();
 		return ResponseEntity.created(location).build();
 	}
 
