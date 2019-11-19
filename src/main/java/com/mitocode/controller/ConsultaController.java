@@ -27,6 +27,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mitocode.dto.ConsultaDTO;
 import com.mitocode.dto.ConsultaListaExamenDTO;
+import com.mitocode.dto.FiltroConsultaDTO;
 import com.mitocode.exception.ModeloNotFoundException;
 import com.mitocode.model.Consulta;
 import com.mitocode.service.IConsultaService;
@@ -133,6 +134,22 @@ public class ConsultaController {
 		
 		return new ResponseEntity<Object>(HttpStatus.OK);
 
+	}
+	
+	@PostMapping(value = "/buscar", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Consulta>> buscar(@RequestBody FiltroConsultaDTO filtro){
+		
+		List<Consulta> consultas = new ArrayList<>();
+		
+		if(filtro != null) {
+			if(filtro.getFechaConsulta() != null) {
+				consultas = service.buscarFecha(filtro);
+			}else {
+				consultas = service.buscar(filtro);
+			}
+		}
+		
+		return new ResponseEntity<List<Consulta>>(consultas,HttpStatus.OK);
 	}
 
 }
