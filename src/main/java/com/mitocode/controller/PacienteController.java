@@ -79,6 +79,7 @@ public class PacienteController {
 //		return new ResponseEntity<Paciente>(pac, HttpStatus.CREATED);
 //	}
 	
+	//@Valid permite que cuando se hace una mala petición (cuando alguien escribe mal algún argumento o atributo de los constrain), se llame al método "handleMethodArgumentNotValid" de la clase ResponseExceptionHandler
 	@PostMapping
 	public ResponseEntity<Object> registrar(@Valid @RequestBody Paciente paciente) {
 		Paciente pac = service.registrar(paciente);
@@ -89,6 +90,7 @@ public class PacienteController {
 
 	@PutMapping
 	public ResponseEntity<Object> modificar(@Valid @RequestBody Paciente paciente) {
+		System.out.println("si llego aca");
 		service.modificar(paciente);
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}

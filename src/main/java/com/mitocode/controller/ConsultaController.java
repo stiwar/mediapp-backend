@@ -27,6 +27,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mitocode.dto.ConsultaDTO;
 import com.mitocode.dto.ConsultaListaExamenDTO;
+import com.mitocode.dto.ConsultaResumenDTO;
 import com.mitocode.dto.FiltroConsultaDTO;
 import com.mitocode.exception.ModeloNotFoundException;
 import com.mitocode.model.Consulta;
@@ -150,6 +151,22 @@ public class ConsultaController {
 		}
 		
 		return new ResponseEntity<List<Consulta>>(consultas,HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/listarResumen", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ConsultaResumenDTO>> listarResumen(){
+		
+		List<ConsultaResumenDTO> consultas = new ArrayList<>();
+		consultas = service.listarResumen();
+		
+		return new ResponseEntity<List<ConsultaResumenDTO>>(consultas, HttpStatus.OK);
+	}
+	
+	@GetMapping(value="/generarReporte", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public ResponseEntity<byte[]> generarReporte(){
+		byte[] data = null;
+		data = service.generarReporte();
+		return new ResponseEntity<byte[]>(data,HttpStatus.OK);
 	}
 
 }

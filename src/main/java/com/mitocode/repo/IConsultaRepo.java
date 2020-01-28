@@ -18,4 +18,13 @@ public interface IConsultaRepo extends JpaRepository<Consulta, Integer>{
 	@Query("FROM Consulta c WHERE c.fecha BETWEEN :fechaConsulta AND :fechaSgte")
 	List<Consulta> buscarFecha(@Param("fechaConsulta") LocalDateTime fechaConsulta, @Param("fechaSgte") LocalDateTime fechaSgte); 
 
+	
+	//La siguiente consulta retorna (por eso el 'Object[]'):
+	
+	//cantidad      fecha
+	//[4         ,    11/05/2019]
+	//[1         ,    18/05/2019]
+	//@Query(value = "SELECT * FROM fn_listarResumen()", nativeQuery = true)//para postgreSql
+	@Query(value = "CALL listarResumen()", nativeQuery = true)//para mySQL
+	List<Object[]> listarResumen();
 }

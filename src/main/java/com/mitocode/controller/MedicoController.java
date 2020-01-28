@@ -38,7 +38,7 @@ public class MedicoController {
 	}
 
 	@PutMapping
-	public Medico modificar(Medico medico) {
+	public Medico modificar(@RequestBody Medico medico) {
 		return service.modificar(medico);
 	}
 
