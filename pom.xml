@@ -105,6 +105,11 @@
 		    <artifactId>jaxb-runtime</artifactId>
 		    <version>2.3.2</version>
 		</dependency>
+		<dependency>
+		    <groupId>com.sun.activation</groupId>
+		    <artifactId>javax.activation</artifactId>
+		    <version>1.2.0</version>
+		</dependency>
 		<!-- FIN se debe agregar si se trabaja con Java 11 -->
 	</dependencies>
 

@@ -8,13 +8,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RestAuthService {
+	
 	public boolean hasAccess(String path) {
+		
 		boolean rpta = false;
-
 		String metodoRol = "";
+		String metodoRoles[];
+		Authentication authentication;
 
-		// /listar
+		// listar
 		switch (path) {
+		
 			case "listar":
 				metodoRol = "ADMIN";
 				break;
@@ -22,13 +26,15 @@ public class RestAuthService {
 			case "listarId":
 				metodoRol = "ADMIN,USER,DBA";
 				break;
+
 		}
 
-		String metodoRoles[] = metodoRol.split(",");
+		metodoRoles = metodoRol.split(",");
 
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();//obtiene la información de quién ha iniciado sesión
+		authentication = SecurityContextHolder.getContext().getAuthentication();//obtiene la información de quién ha iniciado sesión
 		//authentication está amarrado internamente al UserDetailsService, por eso puede saber cuál es el usuario que está logueado
-		if (!(authentication instanceof AnonymousAuthenticationToken)) { //pregunto sino es un usuario anónimo, es decir, si es un usuario logueado
+		if( !(authentication instanceof AnonymousAuthenticationToken) ) { //pregunto sino es un usuario anónimo, es decir, si es un usuario logueado
+			
 			System.out.println(authentication.getName()); //ejemplo demostrativo para obtener el nombre del ususario logueado
 
 			for (GrantedAuthority auth : authentication.getAuthorities()) {
@@ -41,6 +47,7 @@ public class RestAuthService {
 					}
 				}
 			}
+			
 		}
 		return rpta;
 	}

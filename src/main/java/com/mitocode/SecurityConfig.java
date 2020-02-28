@@ -1,6 +1,8 @@
 package com.mitocode;
 //esta clase contiene la configuración necesaria para habilitar Spring Security
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +19,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 @Configuration
 @EnableWebSecurity		//para habilitar las peticiones http en spring security
@@ -36,6 +38,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
+	
+	/* 
+	 * Este atributo dataSource es el definido en el application.properties
+	 * spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+		spring.datasource.url = jdbc:mysql://localhost:3306/mediapp?useSSL=false&allowPublicKeyRetrieval=true
+		spring.datasource.username = root
+		spring.datasource.password = ***
+	 * */
+	@Autowired
+	private DataSource dataSource;
 	
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
@@ -87,13 +99,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	//para indicarle en dónde se van a guardar los tokens
 	@Bean
 	public TokenStore tokenStore() {
-		return new JwtTokenStore(accessTokenConverter()); //para guardar solo en memoria
-		//return new JdbcTokenStore(this.dataSource);     //para guardar en base de datos
+		//return new JwtTokenStore(accessTokenConverter()); //para guardar solo en memoria
+		return new JdbcTokenStore(this.dataSource);     //para guardar en base de datos
 	}
 	
 	@Bean
 	@Primary   //significa que este método va a tener la importancia (preferencia) de creación frente a los métodos anteriores. Es decir, primero se va a ejecutar este método antes que los anteriores.
-	public DefaultTokenServices tokenServices() {
+	public DefaultTokenServices tokenServices() {//es usado en la variable tokenServices de la clase UserController.java
 		DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
 		defaultTokenServices.setTokenStore(tokenStore());//definimos el mecanismo de almacenamiento de los tokens (estamos llamando al método definitdo anteriormente)
 		defaultTokenServices.setSupportRefreshToken(true);	//habilita para poder refrescar los tokens, es decir generar otros para reutilizar
