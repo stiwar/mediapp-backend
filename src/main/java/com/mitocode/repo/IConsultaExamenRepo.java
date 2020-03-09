@@ -13,7 +13,7 @@ import com.mitocode.model.ConsultaExamen;
 public interface IConsultaExamenRepo extends JpaRepository<Consulta, Integer> {
 
 	//@Transactional //SIEMPRE VA obligado cuando se utiliza @Modifying, pero en este caso es mejor ponerlo en la capa Service en ConsultaServiceImpl
-	@Modifying //se utiliza en sentencias de tipo insert, update, delete sino se pone, genera error "La consulta no retornó ningún resultado"
+	@Modifying //se utiliza en sentencias de tipo insert, update, delete sino se pone, genera error "La consulta no retornó ningún resultado", para indicar que el Query de abajo es una sentencia tipo DML
 	@Query(value = "INSERT INTO consulta_examen(id_consulta,id_examen) VALUES (:idConsulta, :idExamen)", nativeQuery = true)
 	Integer registrar(@Param("idConsulta") Integer idConsulta, @Param("idExamen") Integer idExamen);
 	
