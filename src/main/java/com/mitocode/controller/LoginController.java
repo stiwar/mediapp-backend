@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,10 +75,43 @@ public class LoginController {
 			}
 			
 		} catch (Exception e) {
-			return new ResponseEntity<Integer>(rpta, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Integer>(rpta, HttpStatus.OK); //Se cambia INTERNAL_SERVER_ERROR a OK porque la petici[on se hace correctamente, solo que no existe el usuario, sino se deja con INTERNAL_SERVER_ERROR, en el front no se despliega correctamente el mensaje "El usuario ingresado no existe" de recuperar.component.ts
 		}
 		
 		return new ResponseEntity<Integer>(rpta,HttpStatus.OK);
+	}
+	
+	//verificar si el token es válido aún
+	@GetMapping(value = "/restablecer/verificar/{token}")
+	public ResponseEntity<Integer> restablecerClave(@PathVariable("token") String token) {
+		int rpta = 0;
+		try {
+			if (token != null && !token.isEmpty()) {
+				ResetToken rt = tokenService.findByToken(token);
+				if (rt != null && rt.getId() > 0) {
+					if (!rt.isExpirado()) {
+						rpta = 1;
+					}
+				}
+			}
+		} catch (Exception e) {
+			return new ResponseEntity<Integer>(rpta, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<Integer>(rpta, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/restablecer/{token}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Integer> restablecerClave(@PathVariable("token") String token, @RequestBody String clave) {
+		int rpta = 0;
+		try {
+			ResetToken rt = tokenService.findByToken(token);
+			String claveHash = bcrypt.encode(clave);
+			rpta = service.cambiarClave(claveHash, rt.getUsuario().getUsername());
+			tokenService.eliminar(rt);//eliminar el token después de actualizar la contraseña porque ya no tiene sentido guardarlo en BD
+		} catch (Exception e) {
+			return new ResponseEntity<Integer>(rpta, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<Integer>(rpta, HttpStatus.OK);
 	}
 
 }
