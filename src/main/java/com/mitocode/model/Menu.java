@@ -21,7 +21,7 @@ public class Menu {
 	@Column(name = "icono", length = 20)
 	private String icono;
 
-	@Column(name = "icono", length = 20)
+	@Column(name = "nombre", length = 20)
 	private String nombre;
 
 	@Column(name = "url", length = 50)
