@@ -47,11 +47,11 @@ public class ResetToken implements Serializable {
 		this.token = token;
 	}
 
-	public Usuario getUser() {
+	public Usuario getUsuario() {
 		return user;
 	}
 
-	public void setUser(Usuario user) {
+	public void setUsuario(Usuario user) {
 		this.user = user;
 	}
 

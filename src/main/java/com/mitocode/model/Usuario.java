@@ -18,7 +18,7 @@ public class Usuario {
 	private Integer idUsuario;
 
 	@Column(name = "nombre", nullable = false, unique = true)
-	private String username;
+	private String username;//es un correo
 
 	@Column(name = "clave", nullable = false)
 	private String password;
