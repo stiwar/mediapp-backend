@@ -90,7 +90,6 @@ public class PacienteController {
 
 	@PutMapping
 	public ResponseEntity<Object> modificar(@Valid @RequestBody Paciente paciente) {
-		System.out.println("si llego aca");
 		service.modificar(paciente);
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}

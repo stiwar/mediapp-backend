@@ -26,7 +26,7 @@ public class Usuario {
 	@Column(name = "estado", nullable = false)
 	private boolean enabled;
 
-	@ManyToMany(fetch = FetchType.EAGER) // es eager xq un usuario no tendrá muchos rolos, alo mucho 5
+	@ManyToMany(fetch = FetchType.EAGER) // es eager xq un usuario no tendrá muchos roles, alo mucho 5
 	@JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "idUsuario"), inverseJoinColumns = @JoinColumn(name = "id_rol", referencedColumnName = "idRol")) // anotacion para crear una tabla intermedia llamada "usuario_rol"
 	private List<Rol> roles;
 
